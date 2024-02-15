@@ -147,8 +147,9 @@ macro pp!(*exps)
   {% elsif exps.size == 1 %}
     {% exp = exps.first %}
     %prefix = "#{{{ exp.stringify }}} # => "
+    %evaluated = {{exp}}
     ::print %prefix
-    ::pp({{exp}})
+    ::pp(%evaluated)
   {% else %}
     %names = { {{exps.map(&.stringify).splat}} }
     %max_size = %names.max_of &.size
@@ -156,8 +157,9 @@ macro pp!(*exps)
       {% for exp, i in exps %}
         begin
           %prefix = "#{%names[{{i}}].ljust(%max_size)} # => "
+          %evaluated = {{exp}}
           ::print %prefix
-          ::pp({{exp}})
+          ::pp(%evaluated)
         end,
       {% end %}
     }
@@ -181,8 +183,9 @@ macro p!(*exps)
   {% elsif exps.size == 1 %}
     {% exp = exps.first %}
     %prefix = "#{{{ exp.stringify }}} # => "
+    %evaluated = {{exp}}
     ::print %prefix
-    ::p({{exp}})
+    ::p(%evaluated)
   {% else %}
     %names = { {{exps.map(&.stringify).splat}} }
     %max_size = %names.max_of &.size
@@ -190,8 +193,9 @@ macro p!(*exps)
       {% for exp, i in exps %}
         begin
           %prefix = "#{%names[{{i}}].ljust(%max_size)} # => "
+          %evaluated = {{exp}}
           ::print %prefix
-          ::p({{exp}})
+          ::p(%evaluated)
         end,
       {% end %}
     }
